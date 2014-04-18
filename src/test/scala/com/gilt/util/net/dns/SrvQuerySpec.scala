@@ -1,9 +1,9 @@
-package com.giltgroupe.util.net.dns
+package com.gilt.util.net.dns
 
 import org.specs2.mutable._
 import org.specs2.runner._
 import org.junit.runner._
-import com.giltgroupe.util.net.TransportProtocol
+import com.gilt.util.net.TransportProtocol
 
 @RunWith(classOf[JUnitRunner])
 class SrvQuerySpec

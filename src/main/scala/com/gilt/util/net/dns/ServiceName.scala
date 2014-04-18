@@ -1,4 +1,4 @@
-package com.giltgroupe.util.net.dns
+package com.gilt.util.net.dns
 
 /**
  * Name of the service in a format compatible with our use of DNS SRV record feature.

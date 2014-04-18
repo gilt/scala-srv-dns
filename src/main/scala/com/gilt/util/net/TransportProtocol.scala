@@ -1,4 +1,4 @@
-package com.giltgroupe.util.net
+package com.gilt.util.net
 
 /** Net transport protocol constants: TCP/UDP. */
 trait TransportProtocol

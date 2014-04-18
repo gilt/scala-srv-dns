@@ -1,4 +1,4 @@
-package com.giltgroupe.util.net.dns
+package com.gilt.util.net.dns
 
 import java.net.InetAddress
 

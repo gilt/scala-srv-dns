@@ -1,4 +1,4 @@
-package com.giltgroupe.util.net.dns
+package com.gilt.util.net.dns
 
 import org.specs2.mutable._
 import org.specs2.runner._

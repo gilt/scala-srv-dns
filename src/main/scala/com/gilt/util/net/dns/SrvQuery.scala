@@ -1,6 +1,6 @@
-package com.giltgroupe.util.net.dns
+package com.gilt.util.net.dns
 
-import com.giltgroupe.util.net.TransportProtocol
+import com.gilt.util.net.TransportProtocol
 
 /** Helper class to construct ServiceLookup query.
   *

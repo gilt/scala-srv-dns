@@ -1,7 +1,7 @@
-package com.giltgroupe.util.net.dns
+package com.gilt.util.net.dns
 
 import org.xbill.DNS
-import com.giltgroupe.util.net.TransportProtocol
+import com.gilt.util.net.TransportProtocol
 import scala.annotation.tailrec
 import java.net.InetAddress
 import org.slf4j.LoggerFactory
