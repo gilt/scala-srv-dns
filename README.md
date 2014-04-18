@@ -6,6 +6,9 @@ Scala convenience wrapper around org.xbill.DNS for SRV record lookups.
 
 Development
 =============
-http://central.sonatype.org/pages/ossrh-guide.html
-http://www.scala-sbt.org/release/docs/Community/Using-Sonatype.html
-http://www.scala-sbt.org/sbt-pgp/usage.html
+[OSSHR Guide](http://central.sonatype.org/pages/ossrh-guide.html)
+
+[Using Sonatype](http://www.scala-sbt.org/release/docs/Community/Using-Sonatype.html)
+
+[SBT/PGP](http://www.scala-sbt.org/sbt-pgp/usage.html)
+
