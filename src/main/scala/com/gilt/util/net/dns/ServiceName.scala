@@ -22,6 +22,9 @@ case class ServiceName (
 
   /** '.' separated parts. */
   def parts: Seq[String] = name.split('.')
+
+  /** Names that don't end with '.' we combine with search path. */
+  def isAbsolute: Boolean = name.endsWith(".")
 }
 
 object ServiceName {
@@ -32,7 +35,7 @@ object ServiceName {
     //       'foo-bar'
     //       'foo-bar.baz'
     val nameRe = """([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*)"""
-    ("^" + nameRe + """(\.""" + nameRe + """)*$""").r
+    ("^" + nameRe + """(\.""" + nameRe + """)*\.?$""").r
   }
 
   /** Validates service name.

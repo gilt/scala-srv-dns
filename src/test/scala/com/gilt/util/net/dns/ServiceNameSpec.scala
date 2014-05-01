@@ -15,7 +15,8 @@ class ServiceNameSpec
         "foo-bar",
         "foo.bar",
         "foo-bar.baz",
-        "ha.ha.ha"
+        "ha.ha.ha",
+        "service.some.public.site.com."
       ).map { n =>
         (ServiceName(n).name) mustEqual(n) // just make sure it doesn't explode
       }
@@ -35,6 +36,11 @@ class ServiceNameSpec
     "split parts" in {
       ServiceName("foo").parts mustEqual Seq("foo")
       ServiceName("foo.bar").parts mustEqual Seq("foo", "bar")
+    }
+
+    "accept relative/absolute" in {
+      ServiceName("foo.bar.baz").isAbsolute mustEqual(false)
+      ServiceName("foo.bar.baz.").isAbsolute mustEqual(true)
     }
   }
 }

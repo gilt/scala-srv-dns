@@ -34,10 +34,13 @@ trait ServiceLookup { // for dependency injection, unit tests
     *
     * E.g. given this /etc/resolv.conf
     *   search foo.bar.gilt.internal
-    * and this serviceName
-    *   "rabbitmq"
-    * we'll search for
-    *   "_rabbitmq._tcp.foo.bar.gilt.internal."
+    *
+    * lookup("rabbitmq") will query for "_rabbitmq._tcp.foo.bar.gilt.internal."
+    * lookup("rabbitmq.some.app") will query for "_rabbitmq._tcp.some.app.foo.bar.gilt.internal."
+    *
+    * Default search paths will be ignored if name ends with '.'
+    *
+    * lookup("service.some.public.site.com.") will query for "_service._tcp.some.public.site.com."
     *
     * @param serviceName 'canonical' name of a service or a service cluster
     * @param transportProtocol TCP/UDP
@@ -75,7 +78,11 @@ object ServiceLookup
     val serviceName = ServiceName(nameStr) // outside of try/catch, has own validation exception to throw
 
     try {
-      lookup(serviceName, transportProtocol, DnsSearchPaths)
+      if (serviceName.isAbsolute) {
+        runQuery(new SrvQuery(serviceName, transportProtocol, None).query)
+      } else {
+        lookup(serviceName, transportProtocol, DnsSearchPaths)
+      }
     } catch {
       case e: Exception => throw new ServiceLookupException(nameStr, e)
     }
@@ -88,7 +95,7 @@ object ServiceLookup
              dnsSearchPaths: List[String]): Seq[ServiceRecord] = {
 
     dnsSearchPaths match {
-      case sp :: sps => val records = runQuery(new SrvQuery(serviceName, transportProtocol, sp).query)
+      case sp :: sps => val records = runQuery(new SrvQuery(serviceName, transportProtocol, Some(sp)).query)
                         if (records.isEmpty) {
                           lookup(serviceName, transportProtocol, sps)
                         } else {

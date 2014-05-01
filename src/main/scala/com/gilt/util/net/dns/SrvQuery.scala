@@ -16,7 +16,7 @@ private[dns]
 class SrvQuery (
   serviceName: ServiceName,
   transportProtocol: TransportProtocol,
-  defaultDomain: String
+  defaultDomain: Option[String]
 ) {
   require(serviceName != null, "serviceName must not be null")
   require(transportProtocol != null, "transportProtocol must not be null")
@@ -29,15 +29,13 @@ class SrvQuery (
 
     val srvService = "_" + serviceNameParts.head.toLowerCase
     val srvProto = "_" + transportProtocol.toString.toLowerCase
-
-    // We assume all service names are partial and append default search domain,
-    // this allows for some operational flexibility, we can have appropriate default search domains
-    // for IAD/PHX/pods/dev and service clients can effectively hard-code service name part
     val srvName = (serviceNameParts.tail ++ defaultDomainParts).mkString(".")
 
     Seq(srvService, srvProto, srvName, "").mkString(".")
   }
 
   private[this]
-  def defaultDomainParts: Seq[String] = defaultDomain.split('.')
+  def defaultDomainParts: Seq[String] = {
+    defaultDomain.map(_.split('.').toSeq).getOrElse(Seq.empty)
+  }
 }
