@@ -6,12 +6,21 @@ organization := "com.gilt"
 
 scalaVersion := "2.10.3"
 
+crossScalaVersions := Seq("2.9.1", "2.9.2", "2.10.3")
+
 libraryDependencies ++= Seq(
   "dnsjava" % "dnsjava" % "2.1.6", // http://www.dnsjava.org/
   "org.slf4j" %  "slf4j-api" % "1.7.7",
-  "org.specs2" %% "specs2" % "2.3.11" % "test",
   "com.novocode" % "junit-interface" % "0.9" % "test"
 )
+
+libraryDependencies <<= (scalaVersion, libraryDependencies) { (sv, deps) =>
+  // version-dependent dependencies
+  deps :+ (sv match {
+    case v if v startsWith "2.9." => "org.specs2" %% "specs2" % "1.12.4" % "test"
+    case _ => "org.specs2" %% "specs2" % "2.3.11" % "test"
+  })
+}
 
 publishMavenStyle := true
 
