@@ -10,7 +10,7 @@ Add a dependency to build.sbt:
 
     libraryDependencies ++= Seq(
       ...
-      "com.gilt" %% "scala-srv-dns" % "0.0.2"
+      "com.gilt" %% "scala-srv-dns" % "0.0.3"
     )
 
 

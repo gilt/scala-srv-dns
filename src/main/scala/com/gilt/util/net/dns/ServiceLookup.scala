@@ -49,7 +49,6 @@ trait ServiceLookup { // for dependency injection, unit tests
     */
   def lookup(serviceName: String,
              transportProtocol: TransportProtocol = TransportProtocol.TCP): Seq[ServiceRecord]
-
 }
 
 object ServiceLookup
@@ -59,27 +58,23 @@ object ServiceLookup
   val log = LoggerFactory.getLogger(getClass.getName)
 
   private[this]
-  val DnsSearchPaths: List[String] = {
-    // N.B.
-    // The 'search' and 'domain' statements in /etc/resolv.conf are mutually exclusive and may not appear more than once.
-    // Since 'search' is more powerful, 'domain' should not be used.
-    // Xbill package simply filters out 'domain' statement, only cares about 'search'.
-    val systemSearchPaths: List[DNS.Name] = Option(DNS.Lookup.getDefaultSearchPath.toList).getOrElse(Nil)
-    systemSearchPaths.map(_.toString)
-  }
+  val DnsSearchPaths: List[String] = getDnsSearchPaths()
 
   log.info("started with DNS search paths " + DnsSearchPaths)
 
   override def lookup(nameStr: String,
                       transportProtocol: TransportProtocol): Seq[ServiceRecord] = {
-    // check every time and not just on startup to get message closer to the end of the log file
-    assert(!DnsSearchPaths.isEmpty, "Expected to find default DNS search path(s) in resolv.conf but none are defined")
 
     val serviceName = ServiceName(nameStr) // outside of try/catch, has own validation exception to throw
 
     try {
       if (serviceName.isAbsolute) {
         runQuery(new SrvQuery(serviceName, transportProtocol, None).query)
+
+      } else if (DnsSearchPaths.isEmpty) { // check every time and not just on startup to get message closer to the end of the log file
+        if (log.isWarnEnabled) log.warn("Expected to find default DNS search path(s) in resolv.conf but none are defined")
+        Seq.empty // don't explode, this may be a dev node and caller may want to default to something like localhost
+
       } else {
         lookup(serviceName, transportProtocol, DnsSearchPaths)
       }
@@ -131,6 +126,16 @@ object ServiceLookup
       srvR.getPriority,
       srvR.getWeight
     )
+  }
+
+  private[this]
+  def getDnsSearchPaths(): List[String] = {
+    // N.B.
+    // The 'search' and 'domain' statements in /etc/resolv.conf are mutually exclusive and may not appear more than once.
+    // Since 'search' is more powerful, 'domain' should not be used.
+    // Xbill package simply filters out 'domain' statement, only cares about 'search'.
+    val systemSearchPaths: List[DNS.Name] = Option(DNS.Lookup.getDefaultSearchPath.toList).getOrElse(Nil)
+    systemSearchPaths.map(_.toString)
   }
 }
 
