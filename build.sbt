@@ -1,12 +1,12 @@
 name := "scala-srv-dns"
 
-version := "0.0.3"
+version := "0.0.4"
 
 organization := "com.gilt"
 
-scalaVersion := "2.10.3"
+scalaVersion := "2.11.1"
 
-crossScalaVersions := Seq("2.9.1", "2.9.2", "2.10.3")
+crossScalaVersions := Seq("2.9.1", "2.9.2", "2.10.3", "2.11.1")
 
 libraryDependencies ++= Seq(
   "dnsjava" % "dnsjava" % "2.1.6", // http://www.dnsjava.org/
