@@ -134,7 +134,7 @@ object ServiceLookup
     // The 'search' and 'domain' statements in /etc/resolv.conf are mutually exclusive and may not appear more than once.
     // Since 'search' is more powerful, 'domain' should not be used.
     // Xbill package simply filters out 'domain' statement, only cares about 'search'.
-    val systemSearchPaths: List[DNS.Name] = Option(DNS.Lookup.getDefaultSearchPath.toList).getOrElse(Nil)
+    val systemSearchPaths: List[DNS.Name] = Option(DNS.Lookup.getDefaultSearchPath).map(_.toList).getOrElse(Nil)
     systemSearchPaths.map(_.toString)
   }
 }
