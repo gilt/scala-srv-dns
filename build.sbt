@@ -8,6 +8,8 @@ scalaVersion := "2.11.4"
 
 crossScalaVersions := Seq("2.10.4", "2.11.4")
 
+useGpg := true
+
 libraryDependencies ++= Seq(
   "dnsjava" % "dnsjava" % "2.1.6", // http://www.dnsjava.org/
   "org.slf4j" %  "slf4j-api" % "1.7.7",
