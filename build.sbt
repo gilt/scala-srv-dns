@@ -12,7 +12,7 @@ useGpg := true
 
 libraryDependencies ++= Seq(
   "dnsjava" % "dnsjava" % "2.1.6", // http://www.dnsjava.org/
-  "org.slf4j" %  "slf4j-api" % "1.7.7",
+  "org.slf4j" %  "slf4j-api" % "1.7.21",
   "org.specs2" %% "specs2" % "2.4.11" % "test" exclude("org.scalaz.stream", "scalaz-stream_2.10") exclude("org.scalaz.stream", "scalaz-stream_2.11") // seems to be a broken transitive dependency at the moment, can't download
 )
 
