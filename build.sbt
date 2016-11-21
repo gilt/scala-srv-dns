@@ -4,9 +4,9 @@ version := "0.0.5"
 
 organization := "com.gilt"
 
-scalaVersion := "2.11.4"
+scalaVersion := "2.11.8"
 
-crossScalaVersions := Seq("2.10.4", "2.11.4")
+crossScalaVersions := Seq("2.10.6", "2.11.8")
 
 useGpg := true
 
