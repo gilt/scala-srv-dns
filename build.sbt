@@ -10,10 +10,13 @@ crossScalaVersions := Seq("2.10.6", "2.11.8")
 
 useGpg := true
 
+val specsVersion = "3.8.6"
+
 libraryDependencies ++= Seq(
   "dnsjava" % "dnsjava" % "2.1.6", // http://www.dnsjava.org/
   "org.slf4j" %  "slf4j-api" % "1.7.21",
-  "org.specs2" %% "specs2" % "2.4.11" % "test" exclude("org.scalaz.stream", "scalaz-stream_2.10") exclude("org.scalaz.stream", "scalaz-stream_2.11") // seems to be a broken transitive dependency at the moment, can't download
+  "org.specs2" %% "specs2-core" % specsVersion  % "test",
+  "org.specs2" %% "specs2-junit" % specsVersion  % "test"
 )
 
 publishMavenStyle := true
