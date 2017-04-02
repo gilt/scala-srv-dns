@@ -14,7 +14,7 @@ val specsVersion = "3.8.6"
 
 libraryDependencies ++= Seq(
   "dnsjava" % "dnsjava" % "2.1.6", // http://www.dnsjava.org/
-  "org.slf4j" %  "slf4j-api" % "1.7.21",
+  "org.slf4j" %  "slf4j-api" % "1.7.25",
   "org.specs2" %% "specs2-core" % specsVersion  % "test",
   "org.specs2" %% "specs2-junit" % specsVersion  % "test"
 )
